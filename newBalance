@@ -113,10 +113,11 @@ def print_data(s, t, u, p, v, group, notgroup):  # The final act of the program 
                 headers2[k] = headers2[k] + u + ')'
             dataTable.field_names = headers
             dataTable2.field_names = headers2
+            # Ensure 5th column + is casted to integer for proper sorting
             for i in group:
-                dataTable.add_row(i)
+                dataTable.add_row(i[:3] + list(map(int, i[3:])))
             for j in notgroup:
-                dataTable2.add_row(j)
+                dataTable.add_row(j[:3] + list(map(int, j[3:])))
             dataTable.align = 'r'
             dataTable2.align = 'r'
             if s:
