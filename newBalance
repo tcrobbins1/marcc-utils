@@ -1,5 +1,9 @@
 #!/cm/shared/apps/anaconda3/4.4.0/bin/python
 
+# Copyright 2018 - Maryland Advanced Research Computing Center
+# Author: Thomas Robbins
+# License: MIT
+
 import subprocess  # Needed for running scontrol
 import getpass  # Needed for getting username
 import re  # Needed for matching and subbing
@@ -11,6 +15,9 @@ ureg = UnitRegistry()  # Setting up unit conversions
 # Currently opotimally runs on python/3.6-anaconda because none of the other pythons have prettytable and possibly pint
 # This is the python version of the original bash sbalance script. All the data comes from specific column formatting of 'scontrol show cache'
 # Array typically indicates a list of lists and comes from the original script's notation
+
+# Global definitions
+scontrol = '/cm/shared/apps/slurm/current/bin/scontrol'
 
 
 def parse_data(u, d):  # Parses the data so that it can be printed in a somewhat appealing manner later
@@ -154,7 +161,7 @@ args = parser.parse_args()
 
 # Creates a list from the scontrol command that contains user data
 scontrolarray = []
-sproc1 = subprocess.Popen(['scontrol', 'show', 'cache', '-o'], stdout=subprocess.PIPE)
+sproc1 = subprocess.Popen([scontrol, 'show', 'cache', '-o'], stdout=subprocess.PIPE)
 output1 = sproc1.communicate()[0]
 output1 = output1.decode("utf-8")
 for line in output1.splitlines():
