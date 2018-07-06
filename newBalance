@@ -189,7 +189,7 @@ if (args.full):  # <-f>
             printstr = re.sub(r'\)', '', printstr)
             userarray.append(printstr.split()[0])
 
-sproc2 = subprocess.Popen(['scontrol', 'show', 'cache'], stdout=subprocess.PIPE)
+sproc2 = subprocess.Popen([scontrol, 'show', 'cache'], stdout=subprocess.PIPE)
 output2 = sproc2.communicate()[0].decode("utf-8")
 for line in output2.splitlines():
     if 'DefAccount' in line and re.match(testStr, line.split()[0]):
