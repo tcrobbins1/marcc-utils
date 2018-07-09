@@ -69,21 +69,25 @@ def print_data(s, t, u, p, v, group, notgroup):  # The final act of the program 
             #  group: an array containing all the groups; notgroup: an array containing individual users)
     if (p):  # <-p>
         if(v):  # <-v>
-            print('Account,User/NumUsers,Parent,CPU Allocation(%s),CPU Used(%s),Usage(%s),Memory Used(MB/cpu)(%s),Node Used(%s),GPU Used(%s),Run Time(%s)' % (u, u, '%s', u, u, u, u))
+            print('Account,NumUsers,Parent,CPU Allocation(%s),CPU Used(%s),CPU Usage(%s),Memory Used(MB/cpu)(%s),Node Used(%s),GPU Used(%s),Run Time(%s)' % (u, u, '%', u, u, u, u))
             if not t:
                 for i in group:
+                    pCent = str(round(100 * int(i[4]) / int(i[3]), 2))
+                    i.insert(5, pCent)
                     pStr = ','.join(str(k) for k in i)
                     print(pStr)
-                print()
+                print('Account,User,Parent,CPU Allocation(%s),CPU Used(%s),Memory Used(MB/cpu)(%s),Node Used(%s),GPU Used(%s),Run Time(%s)' % (u, u, u, u, u, u))
                 for j in notgroup:
                     pStr2 = ','.join(str(l) for l in j)
                     print(pStr2)
             else:
                 for i in range(0, t[0]):
                     if i < len(group):
+                        pCent = str(round(100 * int(i[4]) / int(i[3]), 2))
+                        i.insert(5, pCent)
                         pStr = ','.join(str(k) for k in group[i])
                         print(pStr)
-                print()
+                print('Account,User,Parent,CPU Allocation(%s),CPU Used(%s),Memory Used(MB/cpu)(%s),Node Used(%s),GPU Used(%s),Run Time(%s)' % (u, u, u, u, u, u))
                 for j in range(0, t[0]):
                     if j < len(notgroup):
                         pStr2 = ','.join(str(l) for l in notgroup[j])
@@ -92,16 +96,16 @@ def print_data(s, t, u, p, v, group, notgroup):  # The final act of the program 
             print('Account,User/NumUsers,Allocation(%s),Used(%s),Usage(%s)' % (u, u, '%s'))
             if not t:
                 for i in group:
-                    pCent = [str(round(100 * int(i[4]) / int(i[5]), 2))]
-                    print(i[0] + "," + i[1] + "," + i[3] + "," + i[4])
+                    pCent = str(round(100 * int(i[4]) / int(i[3]), 2))
+                    print(i[0] + "," + i[1] + "," + i[3] + "," + i[4] + "," + pCent)
                 for j in notgroup:
                     print(j[0] + "," + j[1] + "," + j[3] + "," + j[4] + ",.")
             else:
                 for i in range(0, t[0]):
                     if i < len(group):
                         pList = group[i]
-                        pCent = [str(round(100 * int(i[4]) / int(i[5]), 2))]
-                        print(pList[0] + "," + pList[1] + "," + pList[3] + "," + pList[4])
+                        pCent = str(round(100 * int(pList[4]) / int(pList[3]), 2))
+                        print(pList[0] + "," + pList[1] + "," + pList[3] + "," + pList[4] + "," + pCent)
                 for j in range(0, t[0]):
                     if j < len(notgroup):
                         pList = notgroup[j]
@@ -110,7 +114,7 @@ def print_data(s, t, u, p, v, group, notgroup):  # The final act of the program 
         dataTable = PrettyTable()
         if (v):  # <-v>
             dataTable2 = PrettyTable()
-            headers = ['Account', 'NumUsers', 'Parent', 'CPU Allocation(', 'CPU Used(', 'Usage(%)', 'Memory Used(MB/cpu)(', 'Node Used(', 'GPU Used(', 'Run Time(']
+            headers = ['Account', 'NumUsers', 'Parent', 'CPU Allocation(', 'CPU Used(', 'CPU Usage(%)', 'Memory Used(MB/cpu)(', 'Node Used(', 'GPU Used(', 'Run Time(']
             headers2 = ['Account', 'User', 'Parent', 'CPU Allocation(', 'CPU Used(', 'Memory Used(MB/cpu)(', 'Node Used(', 'GPU Used(', 'Run Time(']
             for k in range(3, 10):
                 if k != 5:
@@ -121,7 +125,7 @@ def print_data(s, t, u, p, v, group, notgroup):  # The final act of the program 
             dataTable2.field_names = headers2
             # Ensure 5th column + is casted to integer for proper sorting
             for i in group:
-                pCent = [str(round(100 * int(i[4]) / int(i[5]), 2))]
+                pCent = [str(round(100 * int(i[4]) / int(i[3]), 2))]
                 dataTable.add_row(i[:3] + list(map(int, i[3:5])) + pCent + list(map(int, i[5:])))
             for j in notgroup:
                 dataTable2.add_row(j[:3] + list(map(int, j[3:])))
@@ -144,7 +148,7 @@ def print_data(s, t, u, p, v, group, notgroup):  # The final act of the program 
             headers = 'Account User/NumUsers Allocation(%s) Used(%s)' % (u, u) + ' Usage(%)'
             dataTable.field_names = headers.split()
             for i in group:
-                pCent = str(round(100 * int(i[4]) / int(i[5]), 2))
+                pCent = str(round(100 * int(i[4]) / int(i[3]), 2))
                 dataTable.add_row([i[0], i[1], i[3], i[4], pCent])
             for j in notgroup:
                 dataTable.add_row([j[0], j[1], j[3], j[4], '.'])
